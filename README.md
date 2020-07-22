@@ -17,11 +17,11 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
 
 * `npm start`
 
-    *Run `build/index.js` compiled from TypeScript with Node. Heroku web process is configured to do the same in `Procfile` when the code is deployed. TODO: Change Procfile to use this script instead.*
+    *Run `build/index.js` (compiled from TypeScript) with Node.js. Heroku web process is configured (in `Procfile`) to use this script. It does so after automatically running the build script too.*
 
 * `npm run build`
 
-    *Run `tsc`, i. e. compile TypeScript as configured in `tsconfig.js`. Heroku uses this script automatically on deploy.*
+    *Run `tsc`, i. e. compile TypeScript as configured in `tsconfig.js`. Output to `build` directory. Heroku uses this script automatically on deploy.*
 </details>
 
 ## Backend source structure
