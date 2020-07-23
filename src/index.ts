@@ -1,13 +1,14 @@
 import { ApolloServer } from "apollo-server";
-import dotenv from "dotenv";
+// import mongoose from "mongoose"; // TODO
 
 import schema from "./schema";
 import resolvers from "./resolvers";
+import { getEnvironmentVariables } from "./utils/helpers";
 
-dotenv.config();
-
+const { PORT, MONGODB_URI } = getEnvironmentVariables();
 const server = new ApolloServer({ typeDefs: schema, resolvers });
 
-server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
+server.listen({ port: PORT }).then(({ url }) => {
   console.log(`Server ready at ${url}`);
+  // TODO: Connect to the database!
 });

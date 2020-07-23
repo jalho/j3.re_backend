@@ -29,11 +29,12 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
 <details>
 <summary>Expand</summary>
 
-Secret environment variables are excluded from version control. They must be added manually to the environment.
+(Secret) environment variables are excluded from version control. They must be added manually to the environment.
 
 | required for | key | value |
 |-|-|-|
 | database access | `MONGODB_URI` | `mongodb+srv:<password>//<username>:@j3re.ytr5p.mongodb.net/<database name>?retryWrites=true&w=majority` |
+| starting development server | `PORT` | `4000` - **Omit from Heroku / deployment platform!** |
 
 where the placeholders must be replaced with the information obtained from [MongoDB dashboard](https://cloud.mongodb.com/):
 
