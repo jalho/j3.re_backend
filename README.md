@@ -17,7 +17,7 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
 
 * `npm start`
 
-    *Run `build/index.js` (compiled from TypeScript) with Node.js. Heroku web process is configured (in `Procfile`) to use this script. It does so after automatically running the build script too.*
+    *Run `build/index.js` (compiled from TypeScript) with Node.js. Heroku web process is configured (in `Procfile`) to use this script. It does so automatically after running the build script first.*
 
 * `npm run build`
 
