@@ -1,33 +1,27 @@
-import { ApolloServer, gql } from "apollo-server";
+import { ApolloServer } from "apollo-server";
 
-const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
-  type Query {
-    books: [Book]
-  }
-`;
+import schema from "./schema";
 
-const books = [
+const notes = [
   {
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling"
+    id: "1234115212",
+    content: "Lorem ipsum.",
+    time: new Date().toISOString()
   },
   {
-    title: "Jurassic Park",
-    author: "Michael Crichton"
+    id: "5863235232",
+    content: "Kahvimuki.",
+    time: new Date().toISOString()
   }
 ];
 
 const resolvers = {
   Query: {
-    books: () => books
+    notes: () => notes
   }
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs: schema, resolvers });
 
 server.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
   console.log(`Server ready at ${url}`);
