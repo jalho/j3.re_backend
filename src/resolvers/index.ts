@@ -1,8 +1,4 @@
-type Note = {
-  id: string;
-  content: string;
-  time: string;
-};
+import { Note } from "../types/Note";
 
 const notes = [
   {
