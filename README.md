@@ -24,6 +24,26 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
     *Run `tsc`, i. e. compile TypeScript as configured in `tsconfig.js`. Output to `build` directory. Heroku uses this script automatically on deploy.*
 </details>
 
+## Required environment variables
+
+<details>
+<summary>Expand</summary>
+
+Secret environment variables are excluded from version control. They must be added manually to the environment.
+
+| required for | key | value |
+|-|-|-|
+| database access | `MONGODB_URI` | `mongodb+srv:<password>//<username>:@j3re.ytr5p.mongodb.net/<database name>?retryWrites=true&w=majority` |
+
+where the placeholders must be replaced with the information obtained from [MongoDB dashboard](https://cloud.mongodb.com/):
+
+* `<username>` is *j3reAdmin* (can be changed)
+
+* `<password>` can be obtained from the dashboard
+
+* `<database name>` is *j3re* (can be changed)
+</details>
+
 ## Backend source structure
 
 <details>
