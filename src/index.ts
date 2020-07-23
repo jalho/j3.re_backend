@@ -1,25 +1,7 @@
 import { ApolloServer } from "apollo-server";
 
 import schema from "./schema";
-
-const notes = [
-  {
-    id: "1234115212",
-    content: "Lorem ipsum.",
-    time: new Date().toISOString()
-  },
-  {
-    id: "5863235232",
-    content: "Kahvimuki.",
-    time: new Date().toISOString()
-  }
-];
-
-const resolvers = {
-  Query: {
-    notes: () => notes
-  }
-};
+import resolvers from "./resolvers";
 
 const server = new ApolloServer({ typeDefs: schema, resolvers });
 
