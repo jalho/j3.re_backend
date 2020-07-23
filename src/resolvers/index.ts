@@ -1,21 +1,30 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { NoteModel } from "../schema/Mongoose";
 import { Note } from "../types";
 
-const notes = [
-  {
-    id: "1234115212",
-    content: "Lorem ipsum.",
-    time: new Date().toISOString()
-  },
-  {
-    id: "5863235232",
-    content: "Kahvimuki.",
-    time: new Date().toISOString()
-  }
-];
+const isString = (value: any): value is string => {
+  return typeof value === "string";
+};
 
+const isNote = (document: any): document is Note => {
+  return (isString(document.id) && isString(document.content) && isString(document.time));
+};
+
+// TODO: Fix!
 const resolvers = {
   Query: {
-    notes: (): Array<Note> => notes
+    notes: async (): Promise<Array<Note>> => {
+      const notes: Array<Note> = [];
+      const result = await NoteModel.find({});
+      result.forEach(document => {
+        console.log("DEBUG\ndocument:\n", document);
+        if (isNote(document)) {
+          console.log("DEBUG\nnote:\n", document);
+          notes.push(document);
+        }
+      });
+      return notes;
+    }
   }
 };
 

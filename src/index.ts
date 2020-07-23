@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server";
 import mongoose from "mongoose";
 
-import schema from "./schema";
+import schema from "./schema/GraphQL";
 import resolvers from "./resolvers";
 import { getEnvironmentVariables } from "./utils/helpers";
 
