@@ -1,7 +1,10 @@
 import { ApolloServer } from "apollo-server";
+import dotenv from "dotenv";
 
 import schema from "./schema";
 import resolvers from "./resolvers";
+
+dotenv.config();
 
 const server = new ApolloServer({ typeDefs: schema, resolvers });
 
