@@ -50,9 +50,27 @@ where the placeholders must be replaced with the information obtained from [Mong
 <details>
     <summary>Expand</summary>
 
-*TODO!*
+*as of 24 July 2020*
 ```
 src
-¦   ...
+¦   index.ts                # entry point
+¦   
++---resolvers
+¦       index.ts            # resolvers for GraphQL operations
+¦       
++---schema                  # define data's shape in different implementations
+¦   +---GraphQL
+¦   ¦       index.ts        # default export for GraphQL types
+¦   ¦       NoteSchema.ts   # "Note" type for GraphQL
+¦   ¦       
+¦   +---Mongoose
+¦           index.ts        # Mongoose schemas and models
+¦           
++---types
+¦       index.d.ts          # own types
+¦       
++---utils
+        helpers.ts          # miscellaneous helper functions
+        typeGuards.ts       # custom type guards for TypeScript
 ```
 </details>
