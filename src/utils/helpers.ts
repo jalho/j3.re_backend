@@ -1,4 +1,3 @@
-import dotenv from "dotenv";
 import { EnvironmentVariables } from "../types";
 
 /**
@@ -13,6 +12,8 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
   /* In development mode load variables from local `.env` file to `process.env`.
   Alternatively, once deployed, variables are obtained from Heroku's system. */
   if (mode && mode === "development") {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const dotenv = require("dotenv");
     dotenv.config();
   }
 
