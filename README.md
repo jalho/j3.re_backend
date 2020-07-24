@@ -31,6 +31,8 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
 
 (Secret) environment variables are excluded from version control. They must be added manually to the environment.
 
+Create a `.env` file in the root directory of the project.
+
 | required for | key | value |
 |-|-|-|
 | database access | `MONGODB_URI` | `mongodb+srv://<username>:<password>@j3re.ytr5p.mongodb.net/<database name>?retryWrites=true&w=majority` |
