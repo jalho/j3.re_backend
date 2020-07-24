@@ -31,7 +31,10 @@ The project's **frontend** can be found at [jalho/j3.re_frontend](https://github
 
 (Secret) environment variables are excluded from version control. They must be added manually to the environment.
 
-Create a `.env` file in the root directory of the project.
+Create a `.env` file in the root directory of the project with content of shape:
+
+    KEY1=VALUE1
+    KEY2=VALUE2
 
 | required for | key | value |
 |-|-|-|
