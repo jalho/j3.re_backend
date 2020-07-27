@@ -2,6 +2,7 @@ export interface Note {
   id: string!;
   content: string!;
   time: string!;
+  approved: boolean!;
 }
 
 /**

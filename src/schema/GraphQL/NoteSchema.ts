@@ -9,5 +9,6 @@ export const Note = gql`
     id: ID!
     content: String!
     time: String!
+    approved: Boolean
   }
 `;

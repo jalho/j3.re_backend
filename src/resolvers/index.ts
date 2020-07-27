@@ -10,7 +10,7 @@ const resolvers = {
       
       // type guard all results to type `Note`
       searchResults.forEach(document => {
-        if (tg.isNote(document)) {
+        if (tg.isNote(document) && document.approved) {
           finalResults.push(document);
         }
       });
