@@ -6,6 +6,11 @@ This is the source of my personal website's GraphQL **backend**.
 
 The project's **frontend** can be found at [jalho/j3.re_frontend](https://github.com/jalho/j3.re_frontend) with comprehensive project documentation.
 
+## First request's delay on Heroku
+
+At the time of writing, the app is being hosted on Heroku with a free plan meaning that it goes to sleep after 30 minutes of inactivity. It wakes up automatically upon any received traffic. This means the first request will have a delay but the subsequent ones will work normally. The behavior is documented at [devcenter.heroku.com](https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping).
+
+
 ## Scripts
 
 <details>
