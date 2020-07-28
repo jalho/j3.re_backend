@@ -25,6 +25,12 @@ const resolvers = {
         if (tg.isUser(document)) finalResults.push(document);
       });
       return finalResults;
+    },
+    oneUser: async (_parent: any, args: { username: string }): Promise<User|null> => {
+      const searchResult = await UserModel.findOne({ username: args.username });
+      if (!searchResult) return null;
+      if (tg.isUser(searchResult)) return searchResult;
+      else return null;
     }
   },
   Mutation: {

@@ -29,6 +29,8 @@ const Queries = gql`
     users: [User]!
     "Get all notes from the database."
     notes: [Note]!
+    "Get one user with matching username."
+    oneUser(username: String!): User
   }
 `;
 
