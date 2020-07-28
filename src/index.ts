@@ -7,7 +7,7 @@ import { getEnvironmentVariables } from "./utils/helpers";
 
 const { PORT, MONGODB_URI } = getEnvironmentVariables();
 
-const server = new ApolloServer({ typeDefs: schema, resolvers });
+const server = new ApolloServer({ typeDefs: schema, resolvers, context: ({ req }) => console.log(req.headers.authorization)});
 
 const mongodbConnectionOptions = {
   useNewUrlParser: true,

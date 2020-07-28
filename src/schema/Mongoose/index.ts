@@ -6,4 +6,10 @@ const noteSchema = new mongoose.Schema({
   approved: Boolean
 });
 
+const userSchema = new mongoose.Schema({
+  username: String,
+  passwordHash: String
+});
+
 export const NoteModel = mongoose.model("Note", noteSchema);
+export const UserModel = mongoose.model("User", userSchema);

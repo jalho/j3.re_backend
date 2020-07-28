@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 
-import { Note } from "../types";
+import { Note, User } from "../types";
 
 /**
  * Custom type guard for narrowing down an unknown type to string.
@@ -48,8 +48,31 @@ const isNote = (value: unknown): value is Note => {
   return true;
 };
 
+/**
+ * Type guard for narrowing type to User.
+ * @param value to check
+ */
+const isUser = (value: unknown): value is User => {
+  const test = value as User;
+
+  // false if at least one of the properties is missing
+  if (test.username === undefined || test.passwordHash === undefined) return false;
+
+  // false if id, username or password hash is not string
+  if (
+    !isString(test.id)
+    || !isString(test.username)
+    || !isString(test.passwordHash)
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
 // default export all type guards
 export default {
   isString,
-  isNote
+  isNote,
+  isUser
 };

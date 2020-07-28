@@ -5,6 +5,12 @@ export interface Note {
   approved: boolean!;
 }
 
+export interface User {
+  id: string!;
+  username: string!;
+  passwordHash: string!;
+}
+
 /**
  * Required environment variables for running the server.
  */
