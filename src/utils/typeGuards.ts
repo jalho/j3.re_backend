@@ -53,19 +53,14 @@ const isNote = (value: unknown): value is Note => {
  * @param value to check
  */
 const isUser = (value: unknown): value is User => {
+  if (value === null) return false;
   const test = value as User;
 
   // false if at least one of the properties is missing
-  if (test.username === undefined || test.passwordHash === undefined) return false;
+  if (test.username === undefined || test.id === undefined) return false;
 
-  // false if id, username or password hash is not string
-  if (
-    !isString(test.id)
-    || !isString(test.username)
-    || !isString(test.passwordHash)
-  ) {
-    return false;
-  }
+  // false if ID or username is not a string
+  if (!isString(test.id) || !isString(test.username)) return false;
 
   return true;
 };

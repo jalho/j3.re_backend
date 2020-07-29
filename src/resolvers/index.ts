@@ -3,10 +3,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NoteModel, UserModel } from "../schema/Mongoose";
 import { Note, User } from "../types";
-import tg from "../utils/typeGuards"; // type guards
+import { asUser } from "../utils/helpers";
+import tg from "../utils/typeGuards";
 
 const resolvers = {
   Query: {
+    // TODO: Rewrite using "as_" utility function.
     notes: async (): Promise<Note[]> => {
       const searchResults = await NoteModel.find({});
       const finalResults: Array<Note> = [];
@@ -18,22 +20,23 @@ const resolvers = {
       });
       return finalResults;
     },
-    users: async (): Promise<User[]> => {
+    users: async (): Promise<User[]|null> => {
       const searchResults = await UserModel.find({});
       const finalResults: Array<User> = [];
       searchResults.forEach(document => {
-        if (tg.isUser(document)) finalResults.push(document);
+        const user = asUser(document);
+        if (user) finalResults.push(user);
       });
-      return finalResults;
+      return finalResults.length > 0 ? finalResults : null;
     },
     oneUser: async (_parent: any, args: { username: string }): Promise<User|null> => {
       const searchResult = await UserModel.findOne({ username: args.username });
-      if (!searchResult) return null;
-      if (tg.isUser(searchResult)) return searchResult;
-      else return null;
+      const user = asUser(searchResult);
+      return user;
     }
   },
   Mutation: {
+    // TODO: Rewrite using "as_" utility function.
     addNote: async (_parent: any, args: { content: string; }): Promise<Note> => {
       const savedNote = await (new NoteModel({
         approved: Math.random() >= 0.5, // TODO: Set as false by default.
@@ -46,6 +49,7 @@ const resolvers = {
         throw new Error("The note couldn't be saved correctly!");
       }
     },
+    // TODO: Rewrite using "as_" utility function.
     addUser: async (_parent: any, args: { username: string; passwordHash: string }): Promise<User> => {
       const savedUser = await (new UserModel({
         username: args.username,

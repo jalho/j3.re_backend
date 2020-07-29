@@ -1,4 +1,5 @@
-import { EnvironmentVariables } from "../types";
+import { EnvironmentVariables, User } from "../types";
+import tg from "./typeGuards";
 
 /**
  * Get server port number and database connection URI from environment.
@@ -29,4 +30,20 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
     PORT: port,
     MONGODB_URI: uri
   };
+};
+
+/**
+ * Narrow an object to type User, or return null if it cannot be done.
+ * @param value to narrow to User type
+ */
+export const asUser = (value: unknown): User|null => {
+  const test = value as User;
+  if (!tg.isUser(test)) return null;
+
+  const resultingUser: User = {
+    id: test.id,
+    username: test.username
+  };
+
+  return resultingUser;
 };

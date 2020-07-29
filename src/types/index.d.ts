@@ -8,7 +8,6 @@ export interface Note {
 export interface User {
   id: string!;
   username: string!;
-  passwordHash: string!;
 }
 
 /**

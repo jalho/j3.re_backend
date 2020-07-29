@@ -9,7 +9,7 @@ const Note = gql`
     "Timestamp of leaving the note as determined by the server."
     time: String!
     "Whether or not the note has been manually approved, as the internet is a filthy place."
-    approved: Boolean
+    approved: Boolean!
   }
 `;
 
@@ -24,9 +24,9 @@ const User = gql`
 const Queries = gql`
   type Query {
     "Get all users from the database."
-    users: [User]!
+    users: [User]
     "Get all notes from the database."
-    notes: [Note]!
+    notes: [Note]
     "Get one user with matching username."
     oneUser(username: String!): User
   }
@@ -35,9 +35,9 @@ const Queries = gql`
 const Mutations = gql`
   type Mutation {
     "Add a new user. Password is used by the server to generate a hash that will be saved. ID is generated automatically."
-    addUser(username: String!, password: String!): User
+    addUser(username: String!, password: String!): User!
     "Add a new note with given content. ID, timestamp and approval are determined by the system."
-    addNote(content: String!): Note
+    addNote(content: String!): Note!
   }
 `;
 
