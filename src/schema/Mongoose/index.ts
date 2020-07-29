@@ -11,5 +11,10 @@ const userSchema = new mongoose.Schema({
   passwordHash: String
 });
 
-export const NoteModel = mongoose.model("Note", noteSchema);
-export const UserModel = mongoose.model("User", userSchema);
+interface UserDocument extends mongoose.Document {
+  username: string;
+  passwordHash: string;
+}
+
+export const UserModel = mongoose.model<UserDocument>("User", userSchema);
+export const NoteModel = mongoose.model("Note", noteSchema); // TODO: Use generics in NoteModel too, like in UserModel
