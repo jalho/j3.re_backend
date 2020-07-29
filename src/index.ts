@@ -11,13 +11,14 @@ const server = new ApolloServer(
   {
     typeDefs: schema,
     resolvers,
-    context: ({ req }) => {
-      const authorization = req.headers.authorization;
-      // TODO: Remove the below prints.
-      authorization
-        ? console.log("Authorization header content:", authorization)
-        : console.log("No authorization header found.");
-      return authorization; // TODO: Parse token from the rest ("bearer... whatever")
+    context: () => {
+      /* TODO: Parse token from authorization header ("bearer..."), and decode user information from the token. Example:
+      https://www.apollographql.com/docs/apollo-server/security/authentication/#putting-user-info-on-the-context. */
+      // const authorization = req.headers.authorization || "";
+      // const loggedInUser = ...
+      return {
+        // loggedInUser
+      };
     }
   }
 );
