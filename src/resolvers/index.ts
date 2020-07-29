@@ -6,22 +6,19 @@ import bcrypt from "bcryptjs";
 
 import { NoteModel, UserModel } from "../schema/Mongoose";
 import { Note, User } from "../types";
-import { asUser } from "../utils/helpers";
+import { asUser, asNote } from "../utils/helpers";
 import tg from "../utils/typeGuards";
 
 const resolvers = {
   Query: {
-    // TODO: Rewrite using "as_" utility function.
-    notes: async (): Promise<Note[]> => {
+    approvedNotes: async (): Promise<Note[]|null> => {
       const searchResults = await NoteModel.find({});
       const finalResults: Array<Note> = [];
-      // type guard all results to type `Note`
       searchResults.forEach(document => {
-        if (tg.isNote(document) && document.approved) {
-          finalResults.push(document);
-        }
+        const note = asNote(document);
+        if (note && note.approved) finalResults.push(note);
       });
-      return finalResults;
+      return finalResults.length > 0 ? finalResults : null;
     },
     users: async (): Promise<User[]|null> => {
       const searchResults = await UserModel.find({});

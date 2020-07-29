@@ -23,6 +23,7 @@ const isBoolean = (value: unknown): value is boolean => {
  * @param value to check
  */
 const isNote = (value: unknown): value is Note => {
+  if (value === null) return false;
   const test = value as Note;
 
   // false if at least one of the properties is missing

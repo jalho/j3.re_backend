@@ -25,8 +25,8 @@ const Queries = gql`
   type Query {
     "Get all users from the database."
     users: [User]
-    "Get all notes from the database."
-    notes: [Note]
+    "Get all approved notes from the database."
+    approvedNotes: [Note]
     "Get one user with matching username."
     oneUser(username: String!): User
   }

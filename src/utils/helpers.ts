@@ -1,4 +1,4 @@
-import { EnvironmentVariables, User } from "../types";
+import { EnvironmentVariables, User, Note } from "../types";
 import tg from "./typeGuards";
 
 /**
@@ -46,4 +46,22 @@ export const asUser = (value: unknown): User|null => {
   };
 
   return resultingUser;
+};
+
+/**
+ * Narrow an object to type Note, or return null if it cannot be done.
+ * @param value to narrow to Note type
+ */
+export const asNote = (value: unknown): Note|null => {
+  const test = value as Note;
+  if (!tg.isNote(test)) return null;
+
+  const resultingNote: Note = {
+    approved: test.approved,
+    content: test.content,
+    id: test.id,
+    time: test.time
+  };
+
+  return resultingNote;
 };
