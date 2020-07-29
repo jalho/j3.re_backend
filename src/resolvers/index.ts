@@ -1,4 +1,7 @@
-// graphql doesn't come with resolver typings I guess TODO: Consider using https://github.com/ardatan/graphql-tools
+/* Apparently `graphql` package doesn't come with resolver typings. One possible workaround could be
+using https://github.com/ardatan/graphql-tools package or something similar. For now I don't see this
+as a priority though, so I'll just disable missing typings warnings in eslint for this file where the
+issue is relevant. */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
