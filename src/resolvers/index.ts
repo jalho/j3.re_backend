@@ -1,10 +1,3 @@
-/* Apparently `graphql` package doesn't come with resolver typings. One possible workaround could be
-using https://github.com/ardatan/graphql-tools package or something similar. For now I don't see this
-as a priority though, so I'll just disable missing typings warnings in eslint for this file where the
-issue is relevant. */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import bcrypt from "bcryptjs";
 
 import { NoteModel, UserModel } from "../schema/Mongoose";
@@ -31,14 +24,14 @@ const resolvers = {
       });
       return finalResults.length > 0 ? finalResults : null;
     },
-    oneUser: async (_parent: any, args: { username: string }): Promise<User|null> => {
+    oneUser: async (_parent: unknown, args: { username: string }): Promise<User|null> => {
       const searchResult = await UserModel.findOne({ username: args.username });
       const user = asUser(searchResult);
       return user;
     }
   },
   Mutation: {
-    addNote: async (_parent: any, args: { content: string; }): Promise<Note|null> => {
+    addNote: async (_parent: unknown, args: { content: string; }): Promise<Note|null> => {
       const savedDocument = await (new NoteModel({
         approved: false, // false by default; should be approved later
         content: args.content,
@@ -46,12 +39,15 @@ const resolvers = {
       })).save();
       return asNote(savedDocument);
     },
-    addUser: async (_parent: any, args: { username: string; password: string }): Promise<User|null> => {
+    addUser: async (_parent: unknown, args: { username: string; password: string }): Promise<User|null> => {
       const addedDocument = await new UserModel({
         username: args.username,
         passwordHash: bcrypt.hashSync(args.password, 10)
       }).save();
       return asUser(addedDocument);
+    },
+    login: async (_parent: unknown, _args: { username: string; password: string }): Promise<string|null> => {
+      return "token"; // TODO: Implement authentication and token generation.
     }
   }
 };

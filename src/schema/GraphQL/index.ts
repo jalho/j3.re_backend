@@ -38,6 +38,8 @@ const Mutations = gql`
     addUser(username: String!, password: String!): User
     "Add a new note with given content. ID, timestamp and approval are determined by the system."
     addNote(content: String!): Note
+    "Log in with username and password. Receive a token on success, or null on incorrect credentials."
+    login(username: String!, password: String!): String
   }
 `;
 
