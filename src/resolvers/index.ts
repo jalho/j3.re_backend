@@ -7,7 +7,6 @@ import bcrypt from "bcryptjs";
 import { NoteModel, UserModel } from "../schema/Mongoose";
 import { Note, User } from "../types";
 import { asUser, asNote } from "../utils/helpers";
-import tg from "../utils/typeGuards";
 
 const resolvers = {
   Query: {
@@ -36,18 +35,13 @@ const resolvers = {
     }
   },
   Mutation: {
-    // TODO: Rewrite using "as_" utility function.
-    addNote: async (_parent: any, args: { content: string; }): Promise<Note> => {
-      const savedNote = await (new NoteModel({
-        approved: Math.random() >= 0.5, // TODO: Set as false by default.
+    addNote: async (_parent: any, args: { content: string; }): Promise<Note|null> => {
+      const savedDocument = await (new NoteModel({
+        approved: false, // false by default; should be approved later
         content: args.content,
         time: new Date().toISOString()
       })).save();
-      if (tg.isNote(savedNote)) {
-        return savedNote;
-      } else {
-        throw new Error("The note couldn't be saved correctly!");
-      }
+      return asNote(savedDocument);
     },
     addUser: async (_parent: any, args: { username: string; password: string }): Promise<User|null> => {
       const addedDocument = await new UserModel({

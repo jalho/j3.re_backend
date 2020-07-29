@@ -35,9 +35,9 @@ const Queries = gql`
 const Mutations = gql`
   type Mutation {
     "Add a new user. Password is used by the server to generate a hash that will be saved. ID is generated automatically."
-    addUser(username: String!, password: String!): User!
+    addUser(username: String!, password: String!): User
     "Add a new note with given content. ID, timestamp and approval are determined by the system."
-    addNote(content: String!): Note!
+    addNote(content: String!): Note
   }
 `;
 
