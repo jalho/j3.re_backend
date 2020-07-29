@@ -1,6 +1,9 @@
 // graphql doesn't come with resolver typings I guess TODO: Consider using https://github.com/ardatan/graphql-tools
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import bcrypt from "bcryptjs";
+
 import { NoteModel, UserModel } from "../schema/Mongoose";
 import { Note, User } from "../types";
 import { asUser } from "../utils/helpers";
@@ -49,14 +52,12 @@ const resolvers = {
         throw new Error("The note couldn't be saved correctly!");
       }
     },
-    // TODO: Rewrite using "as_" utility function.
-    addUser: async (_parent: any, args: { username: string; passwordHash: string }): Promise<User> => {
-      const savedUser = await (new UserModel({
+    addUser: async (_parent: any, args: { username: string; password: string }): Promise<User|null> => {
+      const addedDocument = await new UserModel({
         username: args.username,
-        passwordHash: args.passwordHash
-      })).save();
-      if (tg.isUser(savedUser)) return savedUser;
-      else throw new Error("The user couldn't be saved correctly!");
+        passwordHash: bcrypt.hashSync(args.password, 10)
+      }).save();
+      return asUser(addedDocument);
     }
   }
 };
