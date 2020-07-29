@@ -1,12 +1,16 @@
 import { EnvironmentVariables, User, Note } from "../types";
 import tg from "./typeGuards";
 
+/* TODO: Consider an alternative implementation; really what is happening here is just
+that environment variables are made sure to exist in `process.env`. Therefore they could
+be accessed from there instead of having to return anything from this function. */
 /**
  * Get server port number and database connection URI from environment.
  */
 export const getEnvironmentVariables = (): EnvironmentVariables => {
   let port: number | undefined;
   let uri: string | undefined;
+  let jwtSecret: string | undefined;
 
   const mode = process.env.NODE_ENV;
 
@@ -18,17 +22,19 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
     dotenv.config();
   }
 
-  const { PORT, MONGODB_URI } = process.env;
+  const { PORT, MONGODB_URI, JWT_SECRET } = process.env;
 
   if (PORT) port = parseInt(PORT, 10); // convert to number
   if (MONGODB_URI) uri = MONGODB_URI;
+  if (JWT_SECRET) jwtSecret = JWT_SECRET;
   
   // crash if missing something required
-  if (!uri || !port) throw new Error("Environment variables missing!");
+  if (!uri || !port || !jwtSecret) throw new Error("Environment variables missing!");
 
   return {
     PORT: port,
-    MONGODB_URI: uri
+    MONGODB_URI: uri,
+    JWT_SECRET: jwtSecret
   };
 };
 

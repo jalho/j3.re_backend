@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 import { NoteModel, UserModel } from "../schema/Mongoose";
 import { Note, User } from "../types";
-import { asUser, asNote } from "../utils/helpers";
+import { asUser, asNote, getEnvironmentVariables } from "../utils/helpers";
 
 const resolvers = {
   Query: {
@@ -46,16 +47,23 @@ const resolvers = {
       }).save();
       return asUser(addedDocument);
     },
+    /* Login is mutation instead of query even though it has no side effects in this implementation.
+    Good explanation of the convention can be found at https://stackoverflow.com/a/50190570/9654273. */
     /**
-     * Login is mutation instead of query even though it has no side effects in this implementation.
-     * Good explanation of the convention can be found at https://stackoverflow.com/a/50190570/9654273.
+     * Return a JSON web token for correct credentials, or null for incorrect.
      */
     login: async (_parent: unknown, args: { username: string; password: string }): Promise<string|null> => {
-      // TODO: Implement authentication and token generation.
       const userDocument = await UserModel.findOne({ username: args.username });
       if (!userDocument) return null;
-      // ...
-      return "token";
+      if (bcrypt.compareSync(args.password, userDocument.passwordHash)) {
+        const user = asUser(userDocument);
+        if (!user) return null;
+        const { JWT_SECRET } = getEnvironmentVariables();
+        const token = jwt.sign(user, JWT_SECRET);
+        return token;
+      } else {
+        return null;
+      }
     }
   }
 };

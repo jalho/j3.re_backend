@@ -15,10 +15,12 @@
     "apollo-server": "^2.16.0",
     "bcryptjs": "^2.4.3",
     "graphql": "^15.3.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.25"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.7.32",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",

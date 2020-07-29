@@ -24,4 +24,8 @@ export interface EnvironmentVariables {
    * database name.
    */
   MONGODB_URI: string!;
+  /**
+   * A secret string used in JSON Web Token signature.
+   */
+  JWT_SECRET: string!;
 }

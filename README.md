@@ -45,6 +45,7 @@ Create a `.env` file in the root directory of the project with content of shape:
 |-|-|-|
 | database access | `MONGODB_URI` | `mongodb+srv://<username>:<password>@j3re.ytr5p.mongodb.net/<database name>?retryWrites=true&w=majority` |
 | starting development server | `PORT` | `4000` - **Omit from Heroku!** |
+| signing JSON Web Token | `JWT_SECRET` | *any string* |
 
 where the placeholders must be replaced with the information obtained from [MongoDB dashboard](https://cloud.mongodb.com/):
 
