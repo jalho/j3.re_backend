@@ -7,6 +7,10 @@ import { asUser, asNote, getEnvironmentVariables } from "../utils/helpers";
 
 const resolvers = {
   Query: {
+    /**
+     * Get all notes from the database and return approved ones in an array, or return null
+     * if none of the documents somehow were not of type Note.
+     */
     approvedNotes: async (): Promise<Note[]|null> => {
       const searchResults = await NoteModel.find({});
       const finalResults: Array<Note> = [];
@@ -16,6 +20,10 @@ const resolvers = {
       });
       return finalResults.length > 0 ? finalResults : null;
     },
+    /**
+     * Get all users from the database and return them in an array, or return null if none
+     * of the documents somehow were not of type User.
+     */
     users: async (): Promise<User[]|null> => {
       const searchResults = await UserModel.find({});
       const finalResults: Array<User> = [];
@@ -25,6 +33,10 @@ const resolvers = {
       });
       return finalResults.length > 0 ? finalResults : null;
     },
+    /**
+     * Find one user from the database and return it, or return null if the found document is
+     * somehow not of type User.
+     */
     oneUser: async (_parent: unknown, args: { username: string }): Promise<User|null> => {
       const searchResult = await UserModel.findOne({ username: args.username });
       const user = asUser(searchResult);
@@ -32,6 +44,10 @@ const resolvers = {
     }
   },
   Mutation: {
+    /**
+     * Attempt to save a new note to database. Return the saved note on success, or null if the
+     * saved document is somehow not of type Note.
+     */
     addNote: async (_parent: unknown, args: { content: string; }): Promise<Note|null> => {
       const savedDocument = await (new NoteModel({
         approved: false, // false by default; should be approved later
@@ -40,6 +56,10 @@ const resolvers = {
       })).save();
       return asNote(savedDocument);
     },
+    /**
+     * Attempt to save a new user to database. Return the saved user on success, or null if the
+     * saved document is somehow not of type User.
+     */
     addUser: async (_parent: unknown, args: { username: string; password: string }): Promise<User|null> => {
       const addedDocument = await new UserModel({
         username: args.username,
