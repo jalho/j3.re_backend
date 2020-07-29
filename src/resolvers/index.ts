@@ -46,8 +46,16 @@ const resolvers = {
       }).save();
       return asUser(addedDocument);
     },
-    login: async (_parent: unknown, _args: { username: string; password: string }): Promise<string|null> => {
-      return "token"; // TODO: Implement authentication and token generation.
+    /**
+     * Login is mutation instead of query even though it has no side effects in this implementation.
+     * Good explanation of the convention can be found at https://stackoverflow.com/a/50190570/9654273.
+     */
+    login: async (_parent: unknown, args: { username: string; password: string }): Promise<string|null> => {
+      // TODO: Implement authentication and token generation.
+      const userDocument = await UserModel.findOne({ username: args.username });
+      if (!userDocument) return null;
+      // ...
+      return "token";
     }
   }
 };

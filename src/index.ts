@@ -7,7 +7,20 @@ import { getEnvironmentVariables } from "./utils/helpers";
 
 const { PORT, MONGODB_URI } = getEnvironmentVariables();
 
-const server = new ApolloServer({ typeDefs: schema, resolvers, context: ({ req }) => console.log(req.headers.authorization)});
+const server = new ApolloServer(
+  {
+    typeDefs: schema,
+    resolvers,
+    context: ({ req }) => {
+      const authorization = req.headers.authorization;
+      // TODO: Remove the below prints.
+      authorization
+        ? console.log("Authorization header content:", authorization)
+        : console.log("No authorization header found.");
+      return authorization; // TODO: Parse token from the rest ("bearer... whatever")
+    }
+  }
+);
 
 const mongodbConnectionOptions = {
   useNewUrlParser: true,
