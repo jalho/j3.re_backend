@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import { NoteModel, UserModel } from "../schema/Mongoose";
-import { Note, User } from "../types";
+import { Note, User, AuthPayload } from "../types";
 import { asUser, asNote, getEnvironmentVariables } from "../utils/helpers";
 
 const resolvers = {
@@ -72,7 +72,7 @@ const resolvers = {
     /**
      * Return a JSON web token for correct credentials, or null for incorrect.
      */
-    login: async (_parent: unknown, args: { username: string; password: string }): Promise<string|null> => {
+    login: async (_parent: unknown, args: { username: string; password: string }): Promise<AuthPayload|null> => {
       const userDocument = await UserModel.findOne({ username: args.username });
       if (!userDocument) return null;
       if (bcrypt.compareSync(args.password, userDocument.passwordHash)) {
@@ -80,7 +80,10 @@ const resolvers = {
         if (!user) return null;
         const { JWT_SECRET } = getEnvironmentVariables();
         const token = jwt.sign(user, JWT_SECRET);
-        return token;
+        return {
+          token,
+          user
+        };
       } else {
         return null;
       }

@@ -21,6 +21,13 @@ const User = gql`
   }
 `;
 
+const AuthPayload = gql`
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+`;
+
 const Queries = gql`
   type Query {
     "Get all users from the database."
@@ -39,9 +46,9 @@ const Mutations = gql`
     "Add a new note with given content. ID, timestamp and approval are determined by the system."
     addNote(content: String!): Note
     "Log in with username and password. Receive a token on success, or null on incorrect credentials."
-    login(username: String!, password: String!): String
+    login(username: String!, password: String!): AuthPayload
   }
 `;
 
 // export all schemas here as one default export array
-export default [Note, User, Queries, Mutations];
+export default [Note, User, Queries, Mutations, AuthPayload];

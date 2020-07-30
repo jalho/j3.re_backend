@@ -10,6 +10,11 @@ export interface User {
   username: string!;
 }
 
+export interface AuthPayload {
+  token: string;
+  user: User;
+}
+
 /**
  * Required environment variables for running the server.
  */
