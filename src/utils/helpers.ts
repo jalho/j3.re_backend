@@ -1,3 +1,5 @@
+import jwt from "jsonwebtoken";
+
 import { EnvironmentVariables, User, Note } from "../types";
 import tg from "./typeGuards";
 
@@ -70,4 +72,15 @@ export const asNote = (value: unknown): Note|null => {
   };
 
   return resultingNote;
+};
+
+/**
+ * Decode authorized (logged in) user information from token received in
+ * the authorization header of an HTTP request. Return null if no user
+ * could be decoded.
+ */
+export const decodeToken = (token: string): User|null => {
+  const { JWT_SECRET } = getEnvironmentVariables();
+  const decodedInformation = jwt.verify(token, JWT_SECRET);
+  return asUser(decodedInformation);
 };
