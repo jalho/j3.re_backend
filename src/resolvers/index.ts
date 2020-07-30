@@ -48,7 +48,8 @@ const resolvers = {
      * Attempt to save a new note to database. Return the saved note on success, or null if the
      * saved document is somehow not of type Note.
      */
-    addNote: async (_parent: unknown, args: { content: string; }): Promise<Note|null> => {
+    addNote: async (_parent: unknown, args: { content: string; }, context: { user: unknown }): Promise<Note|null> => {
+      if (!context.user) return null;
       const savedDocument = await (new NoteModel({
         approved: false, // false by default; should be approved later
         content: args.content,
@@ -60,7 +61,8 @@ const resolvers = {
      * Attempt to save a new user to database. Return the saved user on success, or null if the
      * saved document is somehow not of type User.
      */
-    addUser: async (_parent: unknown, args: { username: string; password: string }): Promise<User|null> => {
+    addUser: async (_parent: unknown, args: { username: string; password: string }, context: { user: unknown }): Promise<User|null> => {
+      if (!context.user) return null;
       const addedDocument = await new UserModel({
         username: args.username,
         passwordHash: bcrypt.hashSync(args.password, 10)
