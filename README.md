@@ -61,7 +61,7 @@ where the placeholders must be replaced with the information obtained from [Mong
 <details>
     <summary>Expand</summary>
 
-*as of 24 July 2020*
+*as of 5 August 2020*
 ```
 src
 ¦   index.ts                # entry point
@@ -71,8 +71,7 @@ src
 ¦       
 +---schema                  # define data's shape in different implementations
 ¦   +---GraphQL
-¦   ¦       index.ts        # default export for GraphQL types
-¦   ¦       NoteSchema.ts   # "Note" type for GraphQL
+¦   ¦       index.ts        # GraphQL type definitions
 ¦   ¦       
 ¦   +---Mongoose
 ¦           index.ts        # Mongoose schemas and models
