@@ -15,6 +15,16 @@ export interface AuthPayload {
   user: User;
 }
 
+export interface Project {
+  id: string!
+  name: string!;
+  categories?: string[];
+  description?: string;
+  technologies?: string[];
+  startTime?: string;
+  repositories?: string[];
+}
+
 /**
  * Required environment variables for running the server.
  */

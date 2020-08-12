@@ -1,6 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 
-import { Note, User } from "../types";
+import { Note, User, Project } from "../types";
 
 /**
  * Custom type guard for narrowing down an unknown type to string.
@@ -66,9 +66,19 @@ const isUser = (value: unknown): value is User => {
   return true;
 };
 
+const isProject = (value: unknown): value is Project => {
+  if (!value) return false;
+  const test = value as Project;
+  if (!test.id || !test.name) return false; // required fields must exist...
+  if (!isString(test.id) || !isString(test.name)) return false; // ...and be strings
+  // other fields must be strings or arrays of strings if they exist, but they're not checked (low priority TODO)
+  return true;
+};
+
 // default export all type guards
 export default {
   isString,
   isNote,
-  isUser
+  isUser,
+  isProject
 };

@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { EnvironmentVariables, User, Note } from "../types";
+import { EnvironmentVariables, User, Note, Project } from "../types";
 import tg from "./typeGuards";
 
 /* TODO: Consider an alternative implementation; really what is happening here is just
@@ -72,6 +72,23 @@ export const asNote = (value: unknown): Note|null => {
   };
 
   return resultingNote;
+};
+
+export const asProject = (value: unknown): Project|null => {
+  if (!tg.isProject(value)) return null;
+  const test = value as Project; // TODO: Does "as Project" already get rid of possible excess fields? If not, is the below the best way to do it?
+  // take required fields
+  const resultingProject: Project = {
+    id: test.id,
+    name: test.name
+  };
+  // take other fields, if there are any
+  if (test.categories) resultingProject.categories = test.categories;
+  if (test.description) resultingProject.description = test.description;
+  if (test.technologies) resultingProject.technologies = test.technologies;
+  if (test.startTime) resultingProject.startTime = test.startTime;
+  if (test.repositories) resultingProject.repositories = test.repositories;
+  return resultingProject;
 };
 
 /**

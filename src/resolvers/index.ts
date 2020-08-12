@@ -1,11 +1,18 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-import { NoteModel, UserModel } from "../schema/Mongoose";
-import { Note, User, AuthPayload } from "../types";
-import { asUser, asNote, getEnvironmentVariables } from "../utils/helpers";
+import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
+import { Note, User, AuthPayload, Project } from "../types";
+import { asUser, asNote, getEnvironmentVariables, asProject } from "../utils/helpers";
 
 const resolvers = {
+  /* TODO (question): Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
+  there a more elegant way to implement shared types between Apollo, MongoDB and Node.js code?
+  Currently for example in queries the database is first queried for documents, the results are
+  saved in a temporary array and that is looped through checking every item to be of the required
+  type using custom type guards. Does this make any sense or is it reasonable and good convention?
+  This could perhaps be simplified by using the same shared types when defining schemas for MongoDB,
+  GraphQL and the TypeScript app itself. What's the proper way to do that? */
   Query: {
     /**
      * Get all notes from the database and return approved ones in an array, or return null
@@ -41,6 +48,15 @@ const resolvers = {
       const searchResult = await UserModel.findOne({ username: args.username });
       const user = asUser(searchResult);
       return user;
+    },
+    projects: async (): Promise<Project[]|null> => {
+      const searchResults = await ProjectModel.find({});
+      const finalResults: Array<Project> = [];
+      searchResults.forEach(document => {
+        const project = asProject(document);
+        if (project) finalResults.push(project);
+      });
+      return finalResults.length > 0 ? finalResults : null;
     }
   },
   Mutation: {
@@ -89,6 +105,26 @@ const resolvers = {
       } else {
         return null;
       }
+    },
+    addProject: async (
+      _parent: unknown,
+      args: { name: string, categories?: string[], description?: string, technologies?: string[], startTime?: string, repositories?: string[] },
+      context: { user: unknown }
+    ): Promise<Project|null> => {
+      // return null if not authorized
+      if (!context.user) return null;
+      // take name from args
+      const objectToSave: Omit<Project, "id"> = { name: args.name };
+      // take the rest of the fields in args, if there's any
+      if (args.categories) objectToSave.categories = args.categories;
+      if (args.description) objectToSave.description = args.description;
+      if (args.technologies) objectToSave.technologies = args.technologies;
+      if (args.startTime) objectToSave.startTime = args.startTime;
+      if (args.repositories) objectToSave.repositories = args.repositories;
+      // save the document to database
+      const savedDocument = await (new ProjectModel(objectToSave)).save();
+      // return the saved document as narrowed down to own type "Project"
+      return asProject(savedDocument);
     }
   }
 };

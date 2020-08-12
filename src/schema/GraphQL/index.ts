@@ -36,7 +36,7 @@ const Project = gql`
     categories: [String]
     description: String
     "Technologies used in project, e. g. GraphQL"
-    technologies: String
+    technologies: [String]
     "E. g. Summer 2020"
     startTime: String
     "URLs to e. g. GitHub repositories relevant to the project"
