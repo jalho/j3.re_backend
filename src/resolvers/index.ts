@@ -108,16 +108,25 @@ const resolvers = {
     },
     addProject: async (
       _parent: unknown,
-      args: { name: string, categories?: string[], description?: string, technologies?: string[], startTime?: string, repositories?: string[] },
+      args: {
+        name: string,
+        categories?: string[],
+        description_en?: string,
+        description_fi?: string,
+        technologies?: string[],
+        startTime?: string,
+        repositories?: string[]
+      },
       context: { user: unknown }
     ): Promise<Project|null> => {
       // return null if not authorized
       if (!context.user) return null;
-      // take name from args
-      const objectToSave: Omit<Project, "id"> = { name: args.name };
+      // take name from args and initialize translated descriptions
+      const objectToSave: Omit<Project, "id"> = { name: args.name, description: { en: "", fi: "" } };
       // take the rest of the fields in args, if there's any
       if (args.categories) objectToSave.categories = args.categories;
-      if (args.description) objectToSave.description = args.description;
+      if (args.description_en) objectToSave.description.en = args.description_en;
+      if (args.description_fi) objectToSave.description.fi = args.description_fi;
       if (args.technologies) objectToSave.technologies = args.technologies;
       if (args.startTime) objectToSave.startTime = args.startTime;
       if (args.repositories) objectToSave.repositories = args.repositories;

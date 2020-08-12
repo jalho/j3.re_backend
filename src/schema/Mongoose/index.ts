@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Translations } from "../../types";
 
 const noteSchema = new mongoose.Schema({
   content: String,
@@ -14,7 +15,7 @@ const userSchema = new mongoose.Schema({
 const projectSchema = new mongoose.Schema({
   name: String,
   categories: [String],
-  description: String,
+  description: { en: String, fi: String },
   technologies: [String],
   startTime: String,
   repositories: [String]
@@ -28,7 +29,7 @@ interface UserDocument extends mongoose.Document {
 interface ProjectDocument extends mongoose.Document {
   name: string;
   categories: string[];
-  description: string;
+  description: Translations;
   technologies: string[];
   startTime: string;
   repositories: string[];

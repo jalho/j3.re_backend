@@ -28,13 +28,21 @@ const AuthPayload = gql`
   }
 `;
 
+const Translations = gql`
+  type Translations {
+    en: String
+    fi: String
+  }
+`;
+
 const Project = gql`
   type Project {
     id: ID!
     name: String!
     "Project's category, e. g. full stack"
     categories: [String]
-    description: String
+    "An object containing fields for the description in different languages."
+    description: Translations
     "Technologies used in project, e. g. GraphQL"
     technologies: [String]
     "E. g. Summer 2020"
@@ -69,7 +77,8 @@ const Mutations = gql`
     addProject(
       name: String!,
       categories: [String],
-      description: String,
+      description_en: String,
+      description_fi: String,
       technologies: [String],
       startTime: String,
       repositories: [String]
@@ -78,4 +87,4 @@ const Mutations = gql`
 `;
 
 // export all schemas here as one default export array
-export default [Note, User, Queries, Mutations, AuthPayload, Project];
+export default [Note, User, Queries, Mutations, AuthPayload, Project, Translations];

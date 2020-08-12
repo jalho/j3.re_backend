@@ -15,11 +15,16 @@ export interface AuthPayload {
   user: User;
 }
 
+export interface Translations {
+  en: string;
+  fi: string;
+}
+
 export interface Project {
-  id: string!
+  id: string!;
   name: string!;
   categories?: string[];
-  description?: string;
+  description: Translations;
   technologies?: string[];
   startTime?: string;
   repositories?: string[];

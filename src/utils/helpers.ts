@@ -80,7 +80,11 @@ export const asProject = (value: unknown): Project|null => {
   // take required fields
   const resultingProject: Project = {
     id: test.id,
-    name: test.name
+    name: test.name,
+    description: {
+      en: test.description.en,
+      fi: test.description.fi
+    }
   };
   // take other fields, if there are any
   if (test.categories) resultingProject.categories = test.categories;
