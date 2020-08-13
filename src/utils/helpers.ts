@@ -51,7 +51,7 @@ export const asUser = (value: unknown): User|null => {
   const resultingUser: User = {
     id: test.id,
     username: test.username,
-    roles: test.roles
+    roles: test.roles && test.roles.length > 0 ? test.roles : ["user"]
   };
 
   return resultingUser;

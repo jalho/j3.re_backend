@@ -80,7 +80,7 @@ const resolvers = {
       const addedDocument = await new UserModel({
         username: args.username,
         passwordHash: bcrypt.hashSync(args.password, 10),
-        roles: args.roles
+        roles: args.roles.length > 0 ? args.roles : ["user"]
       }).save();
       return asUser(addedDocument);
     },
