@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import { EnvironmentVariables, User, Note, Project } from "../types";
+import { EnvironmentVariables, User, Note, Project, Role } from "../types";
 import tg from "./typeGuards";
 
 /* TODO: Consider an alternative implementation; really what is happening here is just
@@ -50,7 +50,8 @@ export const asUser = (value: unknown): User|null => {
 
   const resultingUser: User = {
     id: test.id,
-    username: test.username
+    username: test.username,
+    roles: test.roles
   };
 
   return resultingUser;
@@ -104,4 +105,14 @@ export const decodeToken = (token: string): User|null => {
   const { JWT_SECRET } = getEnvironmentVariables();
   const decodedInformation = jwt.verify(token, JWT_SECRET);
   return asUser(decodedInformation);
+};
+
+/**
+ * Get authentication role information.
+ * @param context object containing possible authentication information as parsed from HTTP request
+ */
+export const getAuthType = (context: { user: User }): Role | "not authenticated" => {
+  if (!context.user) return "not authenticated";
+  if (context.user.roles.includes("admin")) return "admin";
+  else return "user";
 };

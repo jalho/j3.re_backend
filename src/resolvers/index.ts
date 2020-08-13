@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
 import { Note, User, AuthPayload, Project } from "../types";
-import { asUser, asNote, getEnvironmentVariables, asProject } from "../utils/helpers";
+import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from "../utils/helpers";
 
 const resolvers = {
   /* TODO (question): Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
@@ -61,11 +61,10 @@ const resolvers = {
   },
   Mutation: {
     /**
-     * Attempt to save a new note to database. Return the saved note on success, or null if the
-     * saved document is somehow not of type Note.
+     * Return null on wrong authorization or some other failure.
      */
-    addNote: async (_parent: unknown, args: { content: string; }, context: { user: unknown }): Promise<Note|null> => {
-      if (!context.user) return null;
+    addNote: async (_parent: unknown, args: { content: string; }, context: { user: User }): Promise<Note|null> => {
+      if (getAuthType(context) === "not authenticated") return null;
       const savedDocument = await (new NoteModel({
         approved: false, // false by default; should be approved later
         content: args.content,
@@ -74,14 +73,14 @@ const resolvers = {
       return asNote(savedDocument);
     },
     /**
-     * Attempt to save a new user to database. Return the saved user on success, or null if the
-     * saved document is somehow not of type User.
+     * Return null on wrong authorization or some other failure.
      */
-    addUser: async (_parent: unknown, args: { username: string; password: string }, context: { user: unknown }): Promise<User|null> => {
-      if (!context.user) return null;
+    addUser: async (_parent: unknown, args: { username: string; password: string, roles: string[] }, context: { user: User }): Promise<User|null> => {
+      if (getAuthType(context) !== "admin") return null;
       const addedDocument = await new UserModel({
         username: args.username,
-        passwordHash: bcrypt.hashSync(args.password, 10)
+        passwordHash: bcrypt.hashSync(args.password, 10),
+        roles: args.roles
       }).save();
       return asUser(addedDocument);
     },
@@ -117,10 +116,10 @@ const resolvers = {
         startTime?: string,
         repositories?: string[]
       },
-      context: { user: unknown }
+      context: { user: User }
     ): Promise<Project|null> => {
       // return null if not authorized
-      if (!context.user) return null;
+      if (getAuthType(context) !== "admin") return null;
       // take name from args and initialize translated descriptions
       const objectToSave: Omit<Project, "id"> = { name: args.name, description: { en: "", fi: "" } };
       // take the rest of the fields in args, if there's any

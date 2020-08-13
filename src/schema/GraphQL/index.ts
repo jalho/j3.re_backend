@@ -18,6 +18,7 @@ const User = gql`
     "Unique ID generated to the user by MongoDB (database)."
     id: ID!
     username: String!
+    roles: [String]!
   }
 `;
 
@@ -68,7 +69,7 @@ const Queries = gql`
 const Mutations = gql`
   type Mutation {
     "Authentication required, otherwise return null."
-    addUser(username: String!, password: String!): User
+    addUser(username: String!, password: String!, roles: [String]!): User
     "Authentication required, otherwise return null."
     addNote(content: String!): Note
     "Return authentication payload on correct credentials, otherwise null."

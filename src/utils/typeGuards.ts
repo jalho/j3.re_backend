@@ -58,7 +58,7 @@ const isUser = (value: unknown): value is User => {
   const test = value as User;
 
   // false if at least one of the properties is missing
-  if (test.username === undefined || test.id === undefined) return false;
+  if (!test.username || !test.id || !test.roles) return false;
 
   // false if ID or username is not a string
   if (!isString(test.id) || !isString(test.username)) return false;

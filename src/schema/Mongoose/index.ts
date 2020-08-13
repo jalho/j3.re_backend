@@ -9,7 +9,8 @@ const noteSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   username: String,
-  passwordHash: String
+  passwordHash: String,
+  roles: [String]
 });
 
 const projectSchema = new mongoose.Schema({
@@ -24,6 +25,7 @@ const projectSchema = new mongoose.Schema({
 interface UserDocument extends mongoose.Document {
   username: string;
   passwordHash: string;
+  roles: string[];
 }
 
 interface ProjectDocument extends mongoose.Document {
