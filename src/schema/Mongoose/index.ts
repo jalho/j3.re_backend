@@ -38,5 +38,5 @@ interface ProjectDocument extends mongoose.Document {
 }
 
 export const UserModel = mongoose.model<UserDocument>("User", userSchema);
-export const NoteModel = mongoose.model("Note", noteSchema); // TODO: Use generics in NoteModel too, like in UserModel
+export const NoteModel = mongoose.model("Note", noteSchema); // (Low priority "To do"): Use generics in NoteModel too, like in UserModel
 export const ProjectModel = mongoose.model<ProjectDocument>("Project", projectSchema);

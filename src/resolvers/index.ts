@@ -6,7 +6,7 @@ import { Note, User, AuthPayload, Project } from "../types";
 import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from "../utils/helpers";
 
 const resolvers = {
-  /* TODO (question): Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
+  /* Question: Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
   there a more elegant way to implement shared types between Apollo, MongoDB and Node.js code?
   Currently for example in queries the database is first queried for documents, the results are
   saved in a temporary array and that is looped through checking every item to be of the required

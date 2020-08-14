@@ -3,11 +3,9 @@ import jwt from "jsonwebtoken";
 import { EnvironmentVariables, User, Note, Project, Role } from "../types";
 import tg from "./typeGuards";
 
-/* TODO: Consider an alternative implementation; really what is happening here is just
-that environment variables are made sure to exist in `process.env`. Therefore they could
-be accessed from there instead of having to return anything from this function. */
 /**
- * Get server port number and database connection URI from environment.
+ * Get needed environment variables from local `.env` config file to `process.env` if
+ * in development mode. Otherwise just return what is already there.
  */
 export const getEnvironmentVariables = (): EnvironmentVariables => {
   let port: number | undefined;
@@ -77,7 +75,9 @@ export const asNote = (value: unknown): Note|null => {
 
 export const asProject = (value: unknown): Project|null => {
   if (!tg.isProject(value)) return null;
-  const test = value as Project; // TODO: Does "as Project" already get rid of possible excess fields? If not, is the below the best way to do it?
+  /* (Low priority "To do"): Does "as Project" already get rid of possible excess fields?
+  If not, is the below the best way to get rid of them? The code looks a bit ugly. */
+  const test = value as Project;
   // take required fields
   const resultingProject: Project = {
     id: test.id,
