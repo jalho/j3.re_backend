@@ -63,6 +63,8 @@ const Queries = gql`
     oneUser(username: String!): User
     "Get all projects."
     projects: [Project]
+    "Get the address from which the request arrived."
+    myIP: String
   }
 `;
 

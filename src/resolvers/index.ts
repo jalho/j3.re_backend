@@ -57,6 +57,13 @@ const resolvers = {
         if (project) finalResults.push(project);
       });
       return finalResults.length > 0 ? finalResults : null;
+    },
+    /**
+     * Return the remote address saved in context, or null if there's none.
+     */
+    myIP: (_parent: unknown, _args: unknown, context: { user?: User, remoteAddress?: string }): string|null => {
+      if (context.remoteAddress) return context.remoteAddress;
+      else return null;
     }
   },
   Mutation: {
