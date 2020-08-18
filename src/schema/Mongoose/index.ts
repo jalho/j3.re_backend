@@ -28,6 +28,12 @@ interface UserDocument extends mongoose.Document {
   roles: string[];
 }
 
+interface NoteDocument extends mongoose.Document {
+  content: string;
+  time: string;
+  approved: boolean;
+}
+
 interface ProjectDocument extends mongoose.Document {
   name: string;
   categories: string[];
@@ -38,5 +44,5 @@ interface ProjectDocument extends mongoose.Document {
 }
 
 export const UserModel = mongoose.model<UserDocument>("User", userSchema);
-export const NoteModel = mongoose.model("Note", noteSchema); // (Low priority "To do"): Use generics in NoteModel too, like in UserModel
+export const NoteModel = mongoose.model<NoteDocument>("Note", noteSchema);
 export const ProjectModel = mongoose.model<ProjectDocument>("Project", projectSchema);

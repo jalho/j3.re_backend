@@ -185,6 +185,26 @@ const resolvers = {
       const savedDocument = await (new ProjectModel(objectToSave)).save();
       // return the saved document as narrowed down to own type "Project"
       return asProject(savedDocument);
+    },
+    /**
+     * Find a note with ID and update it to toggle its approval. Return the updated note.
+     * Admin authentication required. Otherwise return null.
+     */
+    toggleNoteApproval: async (_parent: unknown, args: { id: string }, context: { user: User }): Promise<Note|null> => {
+      // return null if no args or if not authorized as `admin`
+      if (!args.id) return null;
+      if (getAuthType(context) !== "admin") return null;
+
+      const docToToggle = await NoteModel.findById(args.id);
+      if (!docToToggle) return null; // note not found
+      else {
+        const result = await NoteModel.updateOne({ _id: docToToggle.id }, { approved: !docToToggle.approved });
+        if (result.nModified > 0) {
+          docToToggle.approved = !docToToggle.approved;
+          return asNote(docToToggle);
+        }
+      }
+      return null;
     }
   }
 };

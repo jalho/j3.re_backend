@@ -99,6 +99,8 @@ const Mutations = gql`
       startTime: String,
       repositories: [String]
     ): Project
+    "Authentication required, otherwise return null."
+    toggleNoteApproval(id: String!): Note
   }
 `;
 
