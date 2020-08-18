@@ -64,17 +64,36 @@ const resolvers = {
      */
     myIP: async (_parent: unknown, _args: unknown, context: { user?: User, remoteAddress?: string }): Promise<IPLookupPayload|null> => {
       if (context.remoteAddress) {
-        const { data: IP_lookup } = await axios.get(`http://ip-api.com/json/${context.remoteAddress}?fields=status,countryCode,city,isp,mobile,proxy`);
-        if (IP_lookup.status === "fail") return { ip: context.remoteAddress };
-        const { data: flag_lookup } = await axios.get(`https://restcountries.eu/rest/v2/alpha/${IP_lookup.countryCode}?fields=flag`);
-        return {
-          city: IP_lookup.city,
-          ip: context.remoteAddress,
-          isp: IP_lookup.isp,
-          mobile: IP_lookup.mobile,
-          proxy: IP_lookup.proxy,
-          flagURL: flag_lookup.flag
+        const result: IPLookupPayload = {
+          ip: context.remoteAddress
         };
+
+        // try to get IP details from an API
+        try {
+          const { data: IP_lookup } = await axios.get(`http://ip-api.com/json/${context.remoteAddress}?fields=status,countryCode,city,isp,mobile,proxy`);
+          // return only IP if further lookup fails
+          if (IP_lookup.status === "fail") return result;
+          else {
+            result.city = IP_lookup.city;
+            result.isp = IP_lookup.isp;
+            result.mobile = IP_lookup.mobile;
+            result.proxy = IP_lookup.proxy;
+          }
+
+          // try to get flag URL from another API
+          try {
+            const flagLookupResult = await axios.get(`https://restcountries.eu/rest/v2/alpha/${IP_lookup.countryCode}?fields=flag`);
+            result.flagURL = flagLookupResult.data.flag;
+          } catch (error) {
+            // continue regardless of error; just omitting the flag URL
+          }
+
+        } catch (error) {
+          // return only IP if further lookup fails
+          return result;
+        }
+
+        return result; // return payload filled in with available fields
       }
       else return null;
     }
