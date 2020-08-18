@@ -1,8 +1,9 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import axios from "axios";
 
 import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
-import { Note, User, AuthPayload, Project } from "../types";
+import { Note, User, AuthPayload, Project, IPLookupPayload } from "../types";
 import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from "../utils/helpers";
 
 const resolvers = {
@@ -61,8 +62,20 @@ const resolvers = {
     /**
      * Return the remote address saved in context, or null if there's none.
      */
-    myIP: (_parent: unknown, _args: unknown, context: { user?: User, remoteAddress?: string }): string|null => {
-      if (context.remoteAddress) return context.remoteAddress;
+    myIP: async (_parent: unknown, _args: unknown, context: { user?: User, remoteAddress?: string }): Promise<IPLookupPayload|null> => {
+      if (context.remoteAddress) {
+        const { data: IP_lookup } = await axios.get(`http://ip-api.com/json/${context.remoteAddress}?fields=status,countryCode,city,isp,mobile,proxy`);
+        if (IP_lookup.status === "fail") return { ip: context.remoteAddress };
+        const { data: flag_lookup } = await axios.get(`https://restcountries.eu/rest/v2/alpha/${IP_lookup.countryCode}?fields=flag`);
+        return {
+          city: IP_lookup.city,
+          ip: context.remoteAddress,
+          isp: IP_lookup.isp,
+          mobile: IP_lookup.mobile,
+          proxy: IP_lookup.proxy,
+          flagURL: flag_lookup.flag
+        };
+      }
       else return null;
     }
   },

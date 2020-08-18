@@ -53,6 +53,17 @@ const Project = gql`
   }
 `;
 
+const IPLookupPayload = gql`
+  type IPLookupPayload {
+    ip: String!
+    city: String
+    isp: String
+    mobile: Boolean
+    proxy: Boolean
+    flagURL: String
+  }
+`;
+
 const Queries = gql`
   type Query {
     "Get all users from the database."
@@ -64,7 +75,7 @@ const Queries = gql`
     "Get all projects."
     projects: [Project]
     "Get the address from which the request arrived."
-    myIP: String
+    myIP: IPLookupPayload
   }
 `;
 
@@ -90,4 +101,4 @@ const Mutations = gql`
 `;
 
 // export all schemas here as one default export array
-export default [Note, User, Queries, Mutations, AuthPayload, Project, Translations];
+export default [Note, User, Queries, Mutations, AuthPayload, Project, Translations, IPLookupPayload];

@@ -18,6 +18,15 @@ export interface AuthPayload {
   user: User;
 }
 
+export interface IPLookupPayload {
+  ip: string;
+  city?: string;
+  isp?: string;
+  mobile?: boolean;
+  proxy?: boolean;
+  flagURL?: string;
+}
+
 export interface Translations {
   en: string;
   fi: string;
