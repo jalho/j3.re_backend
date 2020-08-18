@@ -20,11 +20,24 @@ const resolvers = {
      * if none of the documents somehow were not of type Note.
      */
     approvedNotes: async (): Promise<Note[]|null> => {
-      const searchResults = await NoteModel.find({});
+      const searchResults = await NoteModel.find({}); // could also just query the ones with field `approved: true` (low priority To do)
       const finalResults: Array<Note> = [];
       searchResults.forEach(document => {
         const note = asNote(document);
         if (note && note.approved) finalResults.push(note);
+      });
+      return finalResults.length > 0 ? finalResults : null;
+    },
+    /**
+     * Get all notes from the database. Only allowed if authenticated as `admin`, otherwise return null.
+     */
+    allNotes: async (_parent: unknown, _args: unknown, context: { user: User }): Promise<Note[]|null> => {
+      if (getAuthType(context) !== "admin") return null;
+      const searchResults = await NoteModel.find({});
+      const finalResults: Array<Note> = [];
+      searchResults.forEach(document => {
+        const note = asNote(document);
+        if (note) finalResults.push(note);
       });
       return finalResults.length > 0 ? finalResults : null;
     },

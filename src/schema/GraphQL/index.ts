@@ -70,6 +70,8 @@ const Queries = gql`
     users: [User]
     "Get all approved notes from the database."
     approvedNotes: [Note]
+    "Get all notes, including the ones not manually approved."
+    allNotes: [Note]
     "Get one user with matching username."
     oneUser(username: String!): User
     "Get all projects."
