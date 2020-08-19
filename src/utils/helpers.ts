@@ -85,7 +85,8 @@ export const asProject = (value: unknown): Project|null => {
     description: {
       en: test.description.en,
       fi: test.description.fi
-    }
+    },
+    visible: test.visible
   };
   // take other fields, if there are any
   if (test.categories) resultingProject.categories = test.categories;

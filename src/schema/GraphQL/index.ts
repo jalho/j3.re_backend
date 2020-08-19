@@ -50,6 +50,8 @@ const Project = gql`
     startTime: String
     "URLs to e. g. GitHub repositories relevant to the project"
     repositories: [String]
+    "Whether or not the project should be presented"
+    visible: Boolean
   }
 `;
 
@@ -97,7 +99,8 @@ const Mutations = gql`
       description_fi: String,
       technologies: [String],
       startTime: String,
-      repositories: [String]
+      repositories: [String],
+      visible: Boolean!
     ): Project
     "Authentication required, otherwise return null."
     toggleNoteApproval(id: String!): Note

@@ -160,20 +160,21 @@ const resolvers = {
     addProject: async (
       _parent: unknown,
       args: {
-        name: string,
-        categories?: string[],
-        description_en?: string,
-        description_fi?: string,
-        technologies?: string[],
-        startTime?: string,
-        repositories?: string[]
+        name: string;
+        categories?: string[];
+        description_en?: string;
+        description_fi?: string;
+        technologies?: string[];
+        startTime?: string;
+        repositories?: string[];
+        visible: boolean;
       },
       context: { user: User }
     ): Promise<Project|null> => {
       // return null if not authorized
       if (getAuthType(context) !== "admin") return null;
       // take name from args and initialize translated descriptions
-      const objectToSave: Omit<Project, "id"> = { name: args.name, description: { en: "", fi: "" } };
+      const objectToSave: Omit<Project, "id"> = { name: args.name, description: { en: "", fi: "" }, visible: args.visible };
       // take the rest of the fields in args, if there's any
       if (args.categories) objectToSave.categories = args.categories;
       if (args.description_en) objectToSave.description.en = args.description_en;

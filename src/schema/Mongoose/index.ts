@@ -19,7 +19,8 @@ const projectSchema = new mongoose.Schema({
   description: { en: String, fi: String },
   technologies: [String],
   startTime: String,
-  repositories: [String]
+  repositories: [String],
+  visible: Boolean
 });
 
 interface UserDocument extends mongoose.Document {
@@ -41,6 +42,7 @@ interface ProjectDocument extends mongoose.Document {
   technologies: string[];
   startTime: string;
   repositories: string[];
+  visible: boolean;
 }
 
 export const UserModel = mongoose.model<UserDocument>("User", userSchema);
