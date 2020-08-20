@@ -104,6 +104,8 @@ const Mutations = gql`
     ): Project
     "Authentication required, otherwise return null."
     toggleNoteApproval(id: String!): Note
+    "Authentication required, otherwise return null."
+    toggleProjectVisibility(id: String!): Project
   }
 `;
 

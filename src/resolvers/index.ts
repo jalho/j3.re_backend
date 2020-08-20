@@ -206,6 +206,22 @@ const resolvers = {
         }
       }
       return null;
+    },
+    toggleProjectVisibility: async (_parent: unknown, args: { id: string }, context: { user: User }): Promise<Project|null> => {
+      // return null if no args or if not authorized as `admin`
+      if (!args.id) return null;
+      if (getAuthType(context) !== "admin") return null;
+      
+      const docToToggle = await ProjectModel.findById(args.id);
+      if (!docToToggle) return null; // not found
+      else {
+        const updateQueryResult = await ProjectModel.updateOne({ _id: docToToggle.id }, { visible: !docToToggle.visible });
+        if (updateQueryResult.nModified > 0) {
+          docToToggle.visible = !docToToggle.visible;
+          return asProject(docToToggle);
+        }
+        return null;
+      }
     }
   }
 };
