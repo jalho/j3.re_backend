@@ -17,6 +17,7 @@ const server = new ApolloServer(
         user: undefined,
         remoteAddress: undefined
       };
+      if (!req) return null; // `req` is undefined in Web Socket connections (used in subscriptions)
       // decode possible authorized user from token
       const authorization = req.headers.authorization || null;
       const token = authorization ? authorization.substring(7) : null;
@@ -38,7 +39,9 @@ const mongodbConnectionOptions = {
 };
 
 server.listen({ port: PORT })
-  .then(({ url }) => console.log(`Server ready at ${url}\nConnecting to database...`))
+  .then(({ url, subscriptionsUrl }) => {
+    console.log(`Server ready at\n\t${url}\n\t${subscriptionsUrl}\nConnecting to database...`);
+  })
   .then(() => mongoose.connect(MONGODB_URI, mongodbConnectionOptions))
   .then(
     () => console.log("Connected to database."),

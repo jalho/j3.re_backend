@@ -1,10 +1,13 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
+import { PubSub } from "apollo-server";
 
 import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
 import { Note, User, AuthPayload, Project, IPLookupPayload } from "../types";
 import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from "../utils/helpers";
+
+const pubsub = new PubSub();
 
 const resolvers = {
   /* Question: Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
@@ -202,7 +205,9 @@ const resolvers = {
         const result = await NoteModel.updateOne({ _id: docToToggle.id }, { approved: !docToToggle.approved });
         if (result.nModified > 0) {
           docToToggle.approved = !docToToggle.approved;
-          return asNote(docToToggle);
+          const resultingNote = asNote(docToToggle);
+          pubsub.publish("NOTE_APPROVAL_TOGGLED", { noteApprovalChanged: resultingNote });
+          return asNote(resultingNote);
         }
       }
       return null;
@@ -222,6 +227,11 @@ const resolvers = {
         }
         return null;
       }
+    }
+  },
+  Subscription: {
+    noteApprovalChanged: {
+      subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_APPROVAL_TOGGLED"])
     }
   }
 };

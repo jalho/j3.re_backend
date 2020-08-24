@@ -109,5 +109,21 @@ const Mutations = gql`
   }
 `;
 
+const Subscriptions = gql`
+  type Subscription {
+    noteApprovalChanged: Note!
+  }
+`;
+
 // export all schemas here as one default export array
-export default [Note, User, Queries, Mutations, AuthPayload, Project, Translations, IPLookupPayload];
+export default [
+  Note,
+  User,
+  AuthPayload,
+  Project,
+  Translations,
+  IPLookupPayload,
+  Queries,
+  Mutations,
+  Subscriptions
+];
