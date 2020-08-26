@@ -238,9 +238,10 @@ const resolvers = {
       const result = await NoteModel.deleteMany({});
       return result.deletedCount ? result.deletedCount : 0;
     },
-    removeNoteByID: (_parent: unknown, args: { id: string }, context: { user: User }): void => {
+    removeNoteByID: async (_parent: unknown, args: { id: string }, context: { user: User }): Promise<number|null> => {
       if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
-      console.log("TODO!", args.id);
+      const result = await NoteModel.deleteOne({ _id: args.id });
+      return result.deletedCount ? result.deletedCount : 0;
     }
   },
   Subscription: {
