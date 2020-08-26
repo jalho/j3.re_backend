@@ -235,8 +235,12 @@ const resolvers = {
     },
     removeAllNotes: async (_parent: unknown, _args: unknown, context: { user: User }): Promise<number> => {
       if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
-      const result = await NoteModel.remove({});
+      const result = await NoteModel.deleteMany({});
       return result.deletedCount ? result.deletedCount : 0;
+    },
+    removeNoteByID: (_parent: unknown, args: { id: string }, context: { user: User }): void => {
+      if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
+      console.log("TODO!", args.id);
     }
   },
   Subscription: {
