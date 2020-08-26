@@ -241,6 +241,9 @@ const resolvers = {
     removeNoteByID: async (_parent: unknown, args: { id: string }, context: { user: User }): Promise<number|null> => {
       if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
       const result = await NoteModel.deleteOne({ _id: args.id });
+      if (result.deletedCount === 1) {
+        pubsub.publish("NOTE_DELETED", { noteDeleted: args.id });
+      }
       return result.deletedCount ? result.deletedCount : 0;
     }
   },
@@ -253,6 +256,9 @@ const resolvers = {
     },
     noteAdded: {
       subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_ADDED"])
+    },
+    noteDeleted: {
+      subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_DELETED"])
     }
   }
 };

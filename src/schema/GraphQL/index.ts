@@ -118,6 +118,7 @@ const Subscriptions = gql`
     noteApprovalChanged: Note!
     projectVisibilityChanged: Project!
     noteAdded: Note!
+    noteDeleted: String!
   }
 `;
 
