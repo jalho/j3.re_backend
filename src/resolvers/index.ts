@@ -125,7 +125,9 @@ const resolvers = {
         content: args.content,
         time: new Date().toISOString()
       })).save();
-      return asNote(savedDocument);
+      const resultingNote = asNote(savedDocument);
+      pubsub.publish("NOTE_ADDED", { noteAdded: resultingNote });
+      return resultingNote;
     },
     /**
      * Return null on wrong authorization or some other failure.
@@ -237,6 +239,9 @@ const resolvers = {
     },
     projectVisibilityChanged: {
       subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["PROJECT_VISIBILITY_CHANGED"])
+    },
+    noteAdded: {
+      subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_ADDED"])
     }
   }
 };

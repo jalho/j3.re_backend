@@ -113,6 +113,7 @@ const Subscriptions = gql`
   type Subscription {
     noteApprovalChanged: Note!
     projectVisibilityChanged: Project!
+    noteAdded: Note!
   }
 `;
 
