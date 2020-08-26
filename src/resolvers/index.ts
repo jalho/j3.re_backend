@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
-import { PubSub } from "apollo-server";
+import { PubSub, AuthenticationError } from "apollo-server";
 
 import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
 import { Note, User, AuthPayload, Project, IPLookupPayload } from "../types";
@@ -114,6 +114,7 @@ const resolvers = {
       else return null;
     }
   },
+  // "Low priority To do": use AuthenticationError instead of `null` return in bad authorization cases
   Mutation: {
     /**
      * Return null on wrong authorization or some other failure.
@@ -231,6 +232,11 @@ const resolvers = {
         }
         return null;
       }
+    },
+    removeAllNotes: async (_parent: unknown, _args: unknown, context: { user: User }): Promise<number> => {
+      if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
+      const result = await NoteModel.remove({});
+      return result.deletedCount ? result.deletedCount : 0;
     }
   },
   Subscription: {

@@ -106,6 +106,8 @@ const Mutations = gql`
     toggleNoteApproval(id: String!): Note
     "Authentication required, otherwise return null."
     toggleProjectVisibility(id: String!): Project
+    "Remove all notes and return deleted count. Intended for development use; not to be implemented in UI."
+    removeAllNotes: Int
   }
 `;
 
