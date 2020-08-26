@@ -112,6 +112,7 @@ const Mutations = gql`
 const Subscriptions = gql`
   type Subscription {
     noteApprovalChanged: Note!
+    projectVisibilityChanged: Project!
   }
 `;
 

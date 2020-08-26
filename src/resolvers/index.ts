@@ -223,7 +223,9 @@ const resolvers = {
         const updateQueryResult = await ProjectModel.updateOne({ _id: docToToggle.id }, { visible: !docToToggle.visible });
         if (updateQueryResult.nModified > 0) {
           docToToggle.visible = !docToToggle.visible;
-          return asProject(docToToggle);
+          const resultingProject = asProject(docToToggle);
+          pubsub.publish("PROJECT_VISIBILITY_CHANGED", { projectVisibilityChanged: resultingProject });
+          return resultingProject;
         }
         return null;
       }
@@ -232,6 +234,9 @@ const resolvers = {
   Subscription: {
     noteApprovalChanged: {
       subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_APPROVAL_TOGGLED"])
+    },
+    projectVisibilityChanged: {
+      subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["PROJECT_VISIBILITY_CHANGED"])
     }
   }
 };
