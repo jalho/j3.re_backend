@@ -119,6 +119,7 @@ const Subscriptions = gql`
     projectVisibilityChanged: Project!
     noteAdded: Note!
     noteDeleted: String!
+    projectAdded: Project!
   }
 `;
 

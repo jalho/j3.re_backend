@@ -189,7 +189,9 @@ const resolvers = {
       // save the document to database
       const savedDocument = await (new ProjectModel(objectToSave)).save();
       // return the saved document as narrowed down to own type "Project"
-      return asProject(savedDocument);
+      const resultingProject = asProject(savedDocument);
+      pubsub.publish("PROJECT_ADDED", { projectAdded: resultingProject });
+      return resultingProject;
     },
     /**
      * Find a note with ID and update it to toggle its approval. Return the updated note.
@@ -257,6 +259,9 @@ const resolvers = {
     },
     noteDeleted: {
       subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["NOTE_DELETED"])
+    },
+    projectAdded: {
+      subscribe: (): AsyncIterator<unknown> => pubsub.asyncIterator(["PROJECT_ADDED"])
     }
   }
 };
