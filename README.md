@@ -61,7 +61,7 @@ where the placeholders must be replaced with the information obtained from [Mong
 <details>
     <summary>Expand</summary>
 
-*as of 5 August 2020*
+*as of 27 August 2020*
 ```
 src
 ¦   index.ts                # entry point

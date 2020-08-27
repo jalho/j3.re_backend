@@ -1,8 +1,10 @@
+// external imports
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import axios from "axios";
 import { PubSub, AuthenticationError } from "apollo-server";
 
+// own imports
 import { NoteModel, UserModel, ProjectModel } from "../schema/Mongoose";
 import { Note, User, AuthPayload, Project, IPLookupPayload } from "../types";
 import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from "../utils/helpers";
@@ -10,13 +12,6 @@ import { asUser, asNote, getEnvironmentVariables, asProject, getAuthType } from 
 const pubsub = new PubSub();
 
 const resolvers = {
-  /* Question: Does it make sense to use narrowers like this ("asUser", "asProject" etc.) or is
-  there a more elegant way to implement shared types between Apollo, MongoDB and Node.js code?
-  Currently for example in queries the database is first queried for documents, the results are
-  saved in a temporary array and that is looped through checking every item to be of the required
-  type using custom type guards. Does this make any sense or is it reasonable and good convention?
-  This could perhaps be simplified by using the same shared types when defining schemas for MongoDB,
-  GraphQL and the TypeScript app itself. What's the proper way to do that? */
   Query: {
     /**
      * Get all notes from the database and return approved ones in an array, or return null
@@ -66,6 +61,9 @@ const resolvers = {
       const user = asUser(searchResult);
       return user;
     },
+    /**
+     * Get all projects from database.
+     */
     projects: async (): Promise<Project[]|null> => {
       const searchResults = await ProjectModel.find({});
       const finalResults: Array<Project> = [];
