@@ -245,6 +245,11 @@ const resolvers = {
         pubsub.publish("NOTE_DELETED", { noteDeleted: args.id });
       }
       return result.deletedCount ? result.deletedCount : 0;
+    },
+    removeProjectByID: async (_parent: unknown, args: { id: string }, context: { user: User }): Promise<number> => {
+      if (getAuthType(context) !== "admin") throw new AuthenticationError("Unauthorized! Admin rights required.");
+      const result = await ProjectModel.deleteOne({ _id: args.id });
+      return result.deletedCount ? result.deletedCount : 0;
     }
   },
   Subscription: {

@@ -110,6 +110,8 @@ const Mutations = gql`
     removeNoteByID(id: String!): Int
     "Remove all notes and return deleted count. Intended for development use; not to be implemented in UI."
     removeAllNotes: Int
+    "Remove a project with given ID. Return deleted count. Admin authorization required."
+    removeProjectByID(id: String!): Int
   }
 `;
 
