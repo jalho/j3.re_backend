@@ -1,3 +1,7 @@
+```
+v1.0 (28 Aug 2020)
+```
+
 # About
 
 Jere Alho, [@jalho](https://github.com/jalho) on GitHub
