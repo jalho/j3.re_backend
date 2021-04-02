@@ -1,0 +1,16 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/constants" as c;
+
+#checkMyIP {
+  @include m.flexCenter();
+  text-align: center;
+  
+  code {
+    color: c.$primaryTextColor;
+  }
+
+  img {
+    padding: 0.5 * c.$fontSizeDefault;
+    height: 4 * c.$fontSizeDefault;
+  }
+}

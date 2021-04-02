@@ -1,0 +1,31 @@
+@use "../styles/constants" as c;
+@use "../styles/mixins" as m;
+
+.header {
+  width: auto;
+  text-align: center;
+  font-size: c.$fontSizeHeader;
+  margin-bottom: c.$fontSizeDefault / 2;
+}
+
+#navbarContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .dropdown-menu {
+    right: 0;
+    left: auto;
+  }
+}
+
+#languageSelector {
+  /* "free space is distributed to auto margins in that dimension", i. e. to the left
+  of the button, making the button go to the right end */
+  margin: 0 0.5rem 0 auto; // top right bottom left
+  
+  .dropdown-toggle {
+    border: none;
+    background: none;
+  }
+}

@@ -1,0 +1,55 @@
+@use "../styles/constants" as c;
+@use "../styles/mixins" as m;
+
+#CV_container {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .item {
+    @include m.flexCenter();
+  }
+}
+
+.CV_item {
+  @include m.flexCenter();
+  background-color: rgb(1, 2, 3, 0.1);
+  border-radius: 0.5em;
+  padding: c.$fontSizeDefault;
+  max-width: 95vw;
+  overflow: hidden;
+  margin: 0 c.$marginDefault c.$marginDefault c.$marginDefault;
+  fill: c.$primaryTextColor;
+  text-align: center;
+
+  span {
+    margin-top: c.$fontSizeDefault / 3;
+  }
+  
+  svg {
+    height: c.$fontSizeDefault * 4;
+  }
+
+  #spokenLanguages {
+    @include m.flexCenter();
+    display: flex;
+    flex-direction: column;
+
+    .spokenLanguage {
+      display: flex;
+      margin: 0 c.$fontSizeDefault / 3;
+      
+      .CV_item_info {
+        margin-left: c.$fontSizeDefault / 3;
+      }
+    }
+
+    #Duolingo_joke {
+      padding-top: c.$fontSizeDefault * 0.4;
+      font-size: c.$fontSizeDefault / 2;
+    }
+  }
+}
+
+.CV_item_info {
+  color: rgb(255, 255, 255, 0.3);
+}

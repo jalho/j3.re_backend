@@ -1,0 +1,93 @@
+@use "./constants" as c;
+
+// center child elements horizontally and vertically
+@mixin flexCenter {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+// prevent text selection (quality of life thing; personal preference)
+@mixin disableTextSelection {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+// customized text selection for the browsers that support it
+@mixin textSelection {
+  ::selection {
+    color: c.$selectionColor;
+    background-color: c.$selectionBackground;
+  }
+  ::-moz-selection {
+    color: c.$selectionColor;
+    background-color: c.$selectionBackground;
+  }
+}
+
+// moving, linear gradient colored background for main app
+@mixin breathingBackground {
+  @keyframes background-move {
+    0%, 100% {
+      background-position: 0%;
+    }
+    75% {
+      background-position: 100%;
+    }
+  }
+  
+  margin: 0;
+  background: linear-gradient(-45deg, rgb(2, 115, 150), rgb(2, 24, 105));
+  background-size: 200%;
+  animation: background-move 7s ease infinite;
+}
+
+// moving, linear gradient colored background for easter egg mode
+@mixin breathingBackgroundEasterEgg {
+  @keyframes background-move {
+    0%, 100% {
+      background-position: 0%;
+    }
+    75% {
+      background-position: 100%;
+    }
+  }
+  
+  margin: 0;
+  background: linear-gradient(-45deg, rgb(221, 54, 54), rgb(105, 2, 2));
+  background-size: 200%;
+  animation: background-move 7s ease infinite;
+}
+
+// general text styles
+@mixin defaultText {
+  @include textSelection();
+
+  // text and decoration color
+  color: c.$primaryTextColor;
+  
+  // font
+  font-family: c.$fontDefault;
+  font-size: c.$fontSizeDefault;
+}
+
+// spinning animation
+@mixin spinningAnimation {
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    65% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  animation: spin 2s infinite;
+}

@@ -1,0 +1,21 @@
+// text colors
+$primaryTextColor: rgb(255, 255, 255, 0.85);
+
+// text selection
+$selectionColor: rgb(234, 137, 253);
+$selectionBackground: none;
+
+// fonts
+$fontDefault: "Baloo Da 2";
+$fontHeader: $fontDefault;
+
+// font sizes
+$fontSizeDefault: 1em;
+$fontSizeHeader: 2em;
+
+// margins, paddings
+$marginDefault: 1.5em;
+$paddingDefault: 0.5rem 1rem; // React Bootstrap Navbar's default
+
+// maximum dimensions
+$contentMaxWidth: 45em;

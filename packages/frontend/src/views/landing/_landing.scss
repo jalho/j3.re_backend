@@ -1,0 +1,11 @@
+@use "../styles/constants" as c;
+@use "../../styles/mixins" as m;
+
+#landingFace {
+  @include m.spinningAnimation();
+  height: calc(#{c.$fontSizeHeader} * 4); // face's size
+}
+
+#landingSubText {
+  margin-top: c.$marginDefault;
+}

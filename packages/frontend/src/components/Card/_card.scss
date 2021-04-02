@@ -1,0 +1,18 @@
+@use "../styles/constants" as c;
+@use "../styles/mixins" as m;
+
+.card {
+  @include m.flexCenter();
+  background-color: rgb(1, 2, 3, 0.1);
+  border-radius: 0.5em;
+  border: none;
+  padding: c.$fontSizeDefault;
+  margin: 0 c.$marginDefault c.$marginDefault c.$marginDefault;
+  max-width: 100%;
+  text-align: center;
+
+  .infoText {
+    margin-bottom: c.$fontSizeDefault;
+    color: rgb(255, 255, 255, 0.3);
+  }
+}

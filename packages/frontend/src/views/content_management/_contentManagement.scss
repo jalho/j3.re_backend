@@ -1,0 +1,62 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/constants" as c;
+
+#contentManagement {
+  text-align: center;
+
+  flex-direction: row;
+  flex-wrap: wrap;
+  
+  .item {
+    @include m.flexCenter();
+  }
+
+  .card  {
+    max-width: 40em;
+
+    .cardItems {
+      @include m.flexCenter();
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .singleCardItem {
+        max-width: 15em;
+      }
+    }
+  }
+
+  .noteItem {
+    @include m.flexCenter();
+    padding: 1em;
+    max-width: 20em;
+
+    .approvalText {
+      font-weight: bold;
+    }
+
+    button {
+      margin-top: c.$fontSizeDefault / 2;
+    }
+  }
+
+  .projectItem {
+    @include m.flexCenter();
+    padding: 1em;
+    max-width: 20em;
+
+    .visibilityText {
+      font-weight: bold;
+    }
+
+    button {
+      margin-top: c.$fontSizeDefault / 2;
+    }
+  }
+
+  label {
+    display: flex;
+    input {
+      width: 5em;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@use "../styles/constants" as c;
+@use "../styles/mixins" as m;
+
+// ugly looking solution from https://stackoverflow.com/a/14205976/9654273
+input,
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active {
+  // color: c.$primaryTextColor;
+  -webkit-text-fill-color: c.$primaryTextColor;
+
+  // "2em" and "inset" make the field black, "!important" keeps it that way
+  $boxShadow: 0 0 0 2em black inset !important;
+  box-shadow: $boxShadow;
+  -webkit-box-shadow: $boxShadow;
+
+}
+
+#loginInformation {
+  @include m.flexCenter();
+
+  #loggedInUsername {
+    font-weight: bolder;
+    letter-spacing: 2px;
+  };
+}

@@ -1,0 +1,57 @@
+/* Styles of this project are not very consistently defined as my both my understanding
+of CSS and the overall idea of the project's structure have evolved greatly throughout
+the development process. In future projects I believe I will have a clearer idea in
+mind to begin with. */
+
+// React Bootstrap's styles
+@use "~bootstrap/scss/bootstrap";
+
+// shared constants and mixins
+@use "./constants" as c;
+@use "./mixins" as m;
+
+// components and view specific styles
+@use "../components/components";
+@use "../views/landing/landing";
+@use "../views/cv/cv";
+@use "../views/leave_note/leave_note";
+@use "../views/login/login";
+@use "../views/easter_egg/easterEgg";
+@use "../components/Card/card";
+@use "../views/portfolio/portfolio";
+@use "../views/content_management/contentManagement";
+@use "../views/check_my_ip/checkMyIP";
+@use "../views/home/home";
+
+html {
+  @include m.breathingBackground();
+  min-height: max-content;
+}
+
+body {
+  @include m.defaultText();
+  background: none;
+}
+
+body, #root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+svg {
+  height: 100%;
+}
+
+// Note: Headers are defined under ../components/
+
+p {
+  max-width: c.$contentMaxWidth;
+}
+
+.view {
+  @include m.flexCenter();
+  padding: c.$paddingDefault;
+  width: 100%;
+  flex: auto;
+}

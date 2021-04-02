@@ -1,0 +1,37 @@
+@use "../styles/constants" as c;
+@use "../styles/mixins" as m;
+
+#leaveNote {
+  @include m.flexCenter();
+  text-align: center;
+
+
+  // Low priority To do: Form appears black in Chrome and white in Firefox. Make it consistent.
+  form {
+    @include m.flexCenter();
+    flex-direction: row;
+    width: 50%;
+
+    input {
+      margin-right: c.$fontSizeDefault / 2;
+      border-radius: 1em;
+      padding: c.$fontSizeDefault;
+    }
+    
+    #submitNote {
+      margin-right: 0;
+      padding: c.$fontSizeDefault / 2;
+    }
+  }
+  
+  .note {
+    background-color: rgb(1, 2, 3, 0.1);
+    border-radius: 1em;
+    margin: c.$marginDefault / 2 0;
+    padding: c.$marginDefault / 2;
+    
+    p {
+      margin-bottom: 0;
+    }
+  }
+}

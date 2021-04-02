@@ -1,0 +1,35 @@
+@use "../../styles/mixins" as m;
+
+#easterEgg {
+  @include m.breathingBackgroundEasterEgg();
+  display: flex;
+  flex: auto;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @keyframes scale {
+    0%, 100% {
+      transform: scale(1)
+    }
+    50% {
+      transform: scale(0.8)
+    }
+  }
+  
+  img {
+    animation: scale 3s infinite;
+  }
+
+  #IPVtext {
+    color: white;
+    font-family: 'ZCOOL KuaiLe';
+    animation: scale 3s infinite;
+    letter-spacing: 0.07em;
+    white-space: nowrap;
+  }
+}

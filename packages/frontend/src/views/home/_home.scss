@@ -1,0 +1,12 @@
+@use "../../styles/constants" as c;
+@use "../../styles/mixins" as m;
+
+#home {
+  text-align: center;
+
+  svg {
+    fill: c.$primaryTextColor;
+    height: 4em;
+    width: 8em;
+  }
+}
