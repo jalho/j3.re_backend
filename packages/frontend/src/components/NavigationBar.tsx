@@ -41,7 +41,7 @@ const NavigationBar: React.FC = () => {
 
   return (
     <div id="navbarContainer">
-      <Navbar variant="dark" sticky="bottom">
+      <Navbar variant="dark" sticky="top">
         <Navbar.Brand as={Link} to="/">j3.re</Navbar.Brand>
     
         <Nav>
