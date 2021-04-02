@@ -1,42 +1,17 @@
-```
-v1.0 (28 Aug 2020)
-```
+# j3.re
 
-# About
+This is the source of my personal website, a full stack web app. Find frontend and backend's source under [`packages/`](packages/).
 
-Jere Alho, [@jalho](https://github.com/jalho) on GitHub
+Backend is deployed on Heroku and frontend on Vercel.
 
-This is the source of my personal website's GraphQL **backend**.
-
-The project's **frontend** can be found at [jalho/j3.re_frontend](https://github.com/jalho/j3.re_frontend) with comprehensive project documentation.
+Due to Heroku's limitations the backend's dependencies are declared at the monorepo's root. Frontend's deps on the other hand are under the respective package since React app deployments are more adjustable on other service providers.
 
 ## First request's delay on Heroku
 
-At the time of writing, the app is being hosted on Heroku with a free plan meaning that it goes to sleep after 30 minutes of inactivity. It wakes up automatically upon any received traffic. This means the first request will have a delay but the subsequent ones will work normally. The behavior is documented at [devcenter.heroku.com](https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping).
+The app is being hosted on Heroku with a free plan meaning that it goes to sleep after 30 minutes of inactivity. It wakes up automatically upon any received traffic. This means the first request will have a delay but the subsequent ones will work normally. The behavior is documented at [devcenter.heroku.com](https://devcenter.heroku.com/articles/free-dyno-hours#dyno-sleeping).
 
-
-## Scripts
-
-<details>
-<summary>Expand</summary>
-
-* `npm start dev`
-
-    *Run `src/index.ts` in continuous watch & restart mode using nodemon and ts-node. This is the only script needed in development.*
-
-* `npm start`
-
-    *Run `build/index.js` (compiled from TypeScript) with Node.js. Heroku web process is configured (in `Procfile`) to use this script. It does so automatically after running the build script first.*
-
-* `npm run build`
-
-    *Run `tsc`, i. e. compile TypeScript as configured in `tsconfig.js`. Output to `build` directory. Heroku uses this script automatically on deploy.*
-</details>
 
 ## Required environment variables
-
-<details>
-<summary>Expand</summary>
 
 (Secret) environment variables are excluded from version control. They must be added manually to the environment.
 
@@ -58,7 +33,6 @@ where the placeholders must be replaced with the information obtained from [Mong
 * `<password>` can be obtained from the dashboard
 
 * `<database name>` is *j3re* (can be changed)
-</details>
 
 ## Backend source structure
 

@@ -1,23 +1,8 @@
-```
-v1.0 (28 Aug 2020)
-```
-
 # About
-
-Jere Alho, [@jalho](https://github.com/jalho) on GitHub
 
 This is the source of my personal website's **frontend** to be served at [j3.re](http://j3.re/).
 
-The project's GraphQL **backend** can be found in its own repository at [jalho/j3.re_backend](https://github.com/jalho/j3.re_backend).
-
-The project also serves as Full Stack Open 2020 ([MOOC](https://fullstackopen.com/) by University of Helsinki) personal final project. For that reason a working hours' tracking document is included in the repository under [temp/school](https://github.com/jalho/j3.re/blob/master/temp/school/Työaikakirjanpito.md).
-
 ## Required environment variables
-
-<details>
-<summary>Expand</summary>
-
-Environment variables are excluded from version control by convention. They must be added manually to the environment.
 
 Create a `.env` file in the root directory of the client with content of shape:
 
@@ -30,7 +15,6 @@ Create a `.env` file in the root directory of the client with content of shape:
 |-|-|-|-|
 | backend use | `REACT_APP_BACKEND_URI` | `https://j3re-backend.herokuapp.com/` | can change |
 | backend Web Socket use | `REACT_APP_BACKEND_WSURI` | `wss://j3re-backend.herokuapp.com/graphql` | `wss://` with HTTPS |
-</details>
 
 ## Frontend source structure
 
@@ -106,7 +90,7 @@ client/src
 ```
 </details>
 
-## Project tech stack (planned)
+## Project tech stack
 
 <details>
 <summary>Expand</summary>
@@ -147,10 +131,7 @@ client/src
 
 ## Progress snapshots
 
-#### Video demos on YouTube, starting from latest.
+#### Video demo on YouTube
 
- 1. [as of commit `49b778c`](https://youtu.be/ez-e5bLRhnQ) - 27 August 2020 **[latest]**
- 2. [as of commit `211533e`](https://youtu.be/476SoWuWQ_o) - 20 August 2020
- 3. [as of commit `968cf10`](https://youtu.be/XYn0gqTw7MI) - 11 August 2020
- 4. [as of commit `407f3ad`](https://youtu.be/r0ZoqIL1H2g) - 21 July 2020
- 5. [as of commit `02d9156`](https://youtu.be/w4ucXlW8Zhg) - 16 July 2020
+[as of commit `49b778c`](https://youtu.be/ez-e5bLRhnQ) - 27 August 2020
+
