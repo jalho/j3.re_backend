@@ -27,7 +27,7 @@ export const getEnvironmentVariables = (): EnvironmentVariables => {
   if (PORT) port = parseInt(PORT, 10); // convert to number
   if (MONGODB_URI) uri = MONGODB_URI;
   if (JWT_SECRET) jwtSecret = JWT_SECRET;
-  
+
   // crash if missing something required
   if (!uri || !port || !jwtSecret) throw new Error("Environment variables missing!");
 
