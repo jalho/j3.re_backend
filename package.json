@@ -1,6 +1,6 @@
 {
-  "name": "j3.re_backend",
-  "version": "1.0.0",
+  "name": "j3.re",
+  "version": "1.1",
   "description": "",
   "main": "index.js",
   "scripts": {
