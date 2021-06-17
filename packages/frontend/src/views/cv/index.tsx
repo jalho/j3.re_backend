@@ -21,24 +21,24 @@ const CV: React.FC = () => {
   return (
     <>
       <div id="CV_container" className="view">
-        
+
         <div>
           <Header text={t("Education")} />
           <div className="CV_item" onClick={eggCounter}>
             <UTU language={i18n.language} />
             <em className="CV_item_info">
-              {t("not yet graduated")}
+              {t("MSC_WIP")}
             </em>
+            <span>{t("DEGREE_BSC")}</span>
+            <span>{t("GRADUATION_TIME")}</span>
             <span>{t("major in computer science")}</span>
             <span>{t("MINOR_SUBJECT_DESCRIPTION")}</span>
-            <span>{t("degree level BSc")}</span>
-            <span>{t("start year 2019")}</span>
           </div>
         </div>
 
         <div className="item">
           <Header text={t("Work experience")} />
-          <Card items={[t("None yet relevant to the field.")]}/>
+          <Card items={[t("WORK_EXPERIENCE_TEXT")]} />
         </div>
 
         <div>
