@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node packages/backend/build/index.js",
-    "dev": "SET NODE_ENV=development&& nodemon --watch packages/backend/src/**/*.ts --exec ts-node packages/backend/src/index.ts"
+    "dev-windows": "SET NODE_ENV=development&& nodemon --watch packages/backend/src/**/*.ts --exec ts-node packages/backend/src/index.ts",
+    "dev-unix": "export NODE_ENV=development&& nodemon --watch packages/backend/src/**/*.ts --exec ts-node packages/backend/src/index.ts"
   },
   "keywords": [],
   "author": "",
