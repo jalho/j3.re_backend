@@ -145,6 +145,16 @@ client/src
 ```
 </details>
 
+## Version history
+
+### [v1.1](https://github.com/jalho/j3.re/releases/tag/v1.1)
+
+Backend and frontend from [v1.0](https://github.com/jalho/j3.re/releases/tag/v1.0) merged into one monorepo.
+
+### [v1.0](https://github.com/jalho/j3.re/releases/tag/v1.0)
+
+The app's backend as it was when the project was submitted to Full Stack Open 2020 final project. Back then the app's frontend was in a separate repository. Backend and frontend were merged into one monorepo in [v1.1](https://github.com/jalho/j3.re/releases/tag/v1.1).
+
 ## Progress snapshots
 
 [Video demo on YouTube as of commit `49b778c`](https://youtu.be/ez-e5bLRhnQ) (27 August 2020)
