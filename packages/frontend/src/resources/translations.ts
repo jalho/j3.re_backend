@@ -52,7 +52,7 @@ export const translations = {
       "mobile address": "mobile address",
       "native": "native",
       "WORK_EXPERIENCE_TEXT": "software developer since 5/2021",
-      "MSC_WIP": "MSc (tech, \"DI\") in progress",
+      "MSC_WIP": "MSc (tech) in progress",
       "Note leaving is only allowed for logged in users.": "Note leaving is only allowed for logged in users.",
       "Note submitted for manual approval.": "Note submitted for manual approval.",
       "NOTES_APPROVAL": "Notes approval",
